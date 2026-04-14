@@ -255,45 +255,6 @@
 
   <form id="mainForm" novalidate>
 
-  <!-- ══ DATOS ══════════════════════════════════════════════════════════════ -->
-  <div class="section">
-    <div class="section-head" onclick="toggleSection(this, event)">
-      <div class="section-title-wrap">
-        <span class="section-letter">—</span>
-        <span class="section-title">Datos del contribuyente</span>
-      </div>
-      <span class="section-toggle open">▾</span>
-    </div>
-    <div class="section-body">
-      <div class="field-grid">
-        <div class="field">
-          <label>Apellido y nombre completo *</label>
-          <input type="text" name="nombre" required>
-        </div>
-        <div class="field">
-          <label>CUIT *</label>
-          <input type="text" name="cuit" placeholder="20-00000000-0" required>
-        </div>
-        <div class="field">
-          <label>E-mail de contacto *</label>
-          <input type="email" name="email" required>
-        </div>
-        <div class="field">
-          <label>Teléfono / WhatsApp</label>
-          <input type="text" name="telefono">
-        </div>
-      </div>
-      <div class="field">
-        <label>Ejercicios fiscales a declarar *</label>
-        <div class="check-group inline">
-          <label class="check-option"><input type="checkbox" name="ejercicios" value="2022"> 2022</label>
-          <label class="check-option"><input type="checkbox" name="ejercicios" value="2023"> 2023</label>
-          <label class="check-option"><input type="checkbox" name="ejercicios" value="2024"> 2024</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- ══ A. SITUACIÓN GENERAL ═══════════════════════════════════════════════ -->
   <div class="section">
     <div class="section-head" onclick="toggleSection(this, event)">
@@ -484,7 +445,7 @@
           <div class="field">
             <label>Sociedad/es pagadora/s</label>
             <span class="hint">Para cada sociedad: denominación y CUIT</span>
-            <textarea name="honorarios_dir_sociedades" placeholder="Ej: Lucci SA — CUIT 30-00000000-0"></textarea>
+            <textarea name="honorarios_dir_sociedades" placeholder="Ej: Empresa SA — CUIT 30-00000000-0"></textarea>
           </div>
           <div class="field">
             <label>Honorarios percibidos por ejercicio</label>
@@ -972,11 +933,6 @@ function exportarXLSX() {
   const data = recolectarDatos();
 
   const labels = {
-    nombre: 'Apellido y nombre',
-    cuit: 'CUIT',
-    email: 'E-mail',
-    telefono: 'Teléfono',
-    ejercicios: 'Ejercicios a declarar',
     cambios_fam: '¿Hubo cambios familiares?',
     cambios_fam_detalle: 'Detalle cambios familiares',
     conyuge: '¿Tiene cónyuge/unión convivencial?',
@@ -1060,15 +1016,15 @@ function exportarXLSX() {
     ['Estudio', 'Lucci & Asociados'],
     ['Formulario', 'DDJJ Bienes Personales y Ganancias'],
     ['Ejercicios', '2022 / 2023 / 2024'],
-    ['Contribuyente', data['nombre'] || ''],
-    ['CUIT', data['cuit'] || ''],
+    ['Contribuyente', ''],
+    ['CUIT', ''],
     ['Exportado', new Date().toLocaleString('es-AR')]
   ];
   const wsMeta = XLSX.utils.aoa_to_sheet(meta);
   wsMeta['!cols'] = [{wch: 20}, {wch: 40}];
   XLSX.utils.book_append_sheet(wb, wsMeta, 'Info');
 
-  const nombre = data['cuit'] ? 'DDJJ_' + data['cuit'].replace(/-/g,'') : 'DDJJ_respuestas';
+  const nombre = 'DDJJ_respuestas';
   XLSX.writeFile(wb, nombre + '.xlsx');
   mostrarToast('Archivo descargado correctamente', 'success');
 }
