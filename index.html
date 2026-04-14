@@ -37,6 +37,7 @@
     font-weight: 300;
     line-height: 1.65;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
   .site-header {
@@ -92,9 +93,9 @@
     gap: 1rem;
   }
   .section-head:hover { background: var(--dark3); }
-  .section-title-wrap { display: flex; align-items: center; gap: .75rem; }
+  .section-title-wrap { display: flex; align-items: center; gap: .75rem; min-width: 0; }
   .section-letter { font-family: var(--serif); font-size: 1rem; font-weight: 500; color: var(--muted); width: 22px; flex-shrink: 0; }
-  .section-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; color: var(--white); }
+  .section-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; color: var(--white); min-width: 0; }
   .section-badge { font-size: 10px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--border2); color: var(--muted); flex-shrink: 0; }
   .section-toggle { color: var(--muted); font-size: 12px; transition: transform .25s; flex-shrink: 0; }
   .section-toggle.open { transform: rotate(180deg); }
@@ -102,8 +103,8 @@
   .section-body.hidden { display: none; }
 
   .field { display: flex; flex-direction: column; gap: .4rem; }
-  .field label { font-size: 13px; font-weight: 400; color: var(--light); line-height: 1.4; }
-  .field .hint { font-size: 11px; color: var(--muted); margin-top: -2px; }
+  .field label { font-size: 13px; font-weight: 400; color: var(--light); line-height: 1.4; overflow-wrap: break-word; }
+  .field .hint { font-size: 11px; color: var(--muted); margin-top: -2px; overflow-wrap: break-word; }
 
   .field input[type=text],
   .field input[type=email],
@@ -199,8 +200,8 @@
   .btn-secondary { background: transparent; color: var(--muted); }
   .btn-secondary:hover { background: var(--dark3); color: var(--light); }
 
-  .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--dark2); border: 1px solid var(--border); border-radius: var(--radius); padding: .75rem 1.25rem; font-size: 13px; color: var(--light); z-index: 999; opacity: 0; transform: translateY(8px); transition: all .3s; max-width: 280px; }
-  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast { position: fixed; bottom: 1.5rem; right: 1rem; left: 1rem; background: var(--dark2); border: 1px solid var(--border); border-radius: var(--radius); padding: .75rem 1.25rem; font-size: 13px; color: var(--light); z-index: 999; opacity: 0; transform: translateY(8px); transition: all .3s; max-width: 300px; margin-left: auto; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .toast.success { border-color: var(--accent); color: var(--accent); }
   .toast.error { border-color: var(--danger); color: var(--danger); }
 
@@ -214,11 +215,17 @@
   .firma-campo input { background: transparent; border: none; border-bottom: 1px solid var(--border); border-radius: 0; color: var(--light); width: 100%; padding: .3rem 0; font-family: var(--sans); font-size: 13px; outline: none; }
 
   @media(max-width:600px) {
-    .site-header { padding: 1rem; }
+    .site-header { padding: 0; }
+    .site-header a { padding: 1rem !important; gap: 1rem !important; }
+    .progress-wrap { padding: .6rem 1rem; }
     .form-shell { padding: 1.5rem 1rem 4rem; }
+    .intro-box { padding: 1.25rem 1rem; }
+    .section-head { padding: .85rem 1rem; }
     .section-body { padding: 1rem; }
+    .sub-section { padding: .85rem 1rem; }
     .btn-row { flex-direction: column; }
     .btn { width: 100%; text-align: center; }
+    .firma-line { flex-direction: column; gap: 1rem; }
   }
 </style>
 </head>
@@ -477,7 +484,7 @@
           <div class="field">
             <label>Sociedad/es pagadora/s</label>
             <span class="hint">Para cada sociedad: denominación y CUIT</span>
-            <textarea name="honorarios_dir_sociedades" placeholder="Ej: Lucci SA — CUIT 30-00000000-0"></textarea>
+            <textarea name="honorarios_dir_sociedades" placeholder="Ej: Empresa SA — CUIT 30-00000000-0"></textarea>
           </div>
           <div class="field">
             <label>Honorarios percibidos por ejercicio</label>
